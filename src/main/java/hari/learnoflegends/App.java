@@ -2,6 +2,8 @@ package hari.learnoflegends;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import freemarker.template.Configuration;
 import hari.learnoflegends.gui.AnswerGUI;
@@ -11,6 +13,9 @@ import hari.learnoflegends.gui.QuestionGUI;
 import hari.learnoflegends.gui.QuizGUI;
 import hari.learnoflegends.league.ChampionManager;
 import hari.learnoflegends.quiz.Quiz;
+import spark.ExceptionHandler;
+import spark.Request;
+import spark.Response;
 import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -57,6 +62,7 @@ public class App {
   private void runSparkServer() {
     Spark.port(getHerokuAssignedPort());
     Spark.externalStaticFileLocation("src/main/resources/static");
+    Spark.exception(Exception.class, new ExceptionPrinter());
 
     FreeMarkerEngine freeMarker = createEngine();
 
@@ -73,6 +79,26 @@ public class App {
     Spark.post("/answer", new AnswerGUI(), freeMarker);
     Spark.get("/answer", new AnswerGUI(), freeMarker);
     Spark.get("*", new QuizGUI(homeChamp), freeMarker);
+  }
+
+  /**
+   * Display an error page when an exception occurs in the server.
+   */
+  private static class ExceptionPrinter implements ExceptionHandler<Exception> {
+    @Override
+    public void handle(Exception e, Request req, Response res) {
+      res.status(500);
+      StringWriter stacktrace = new StringWriter();
+      try (PrintWriter pw = new PrintWriter(stacktrace)) {
+        pw.println("<pre>");
+        e.printStackTrace(pw);
+        pw.println("</pre>");
+      }
+      res.body(stacktrace.toString());
+      // Redirects to home page on error & prints error to stderr
+      e.printStackTrace(System.err);
+      res.redirect(LANDING_PAGE);
+    }
   }
 
   public static ChampionManager getManager() {
