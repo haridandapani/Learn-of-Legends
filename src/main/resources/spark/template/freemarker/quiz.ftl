@@ -8,12 +8,14 @@
       <p>
         <#if choices??>
           <#list 0..choices?size-1 as i>
-            <input type="radio" id= ${i}  name="choice" value= ${i} required>
-            <label for= ${i}>${choices[i].text}</label><br><br>
+            <div class = "radio-item">
+              <input  type="radio" id= ${i}  name="choice" value= ${i} required>
+              <label for= ${i}>${choices[i].text}</label><br><br>
+            </div>
           </#list>
       </#if>
       </p>
-  <input type="submit" value="Submit Answer">
+  <input class = "button" type="submit" value="Submit Answer">
   </form>
   </div>
 </html>

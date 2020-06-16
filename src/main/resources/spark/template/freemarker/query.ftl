@@ -7,7 +7,7 @@
       <input type = number id="numQuestions" name = "numQuestions" min = "1" max = "100" step = "1" required></input><br>
       <input type="checkbox" id="showAfterQuestion" name="showAfterQuestion" value="showAfterQuestion">
       <label for="showAfterQuestion"> Show answer after each question: </label><br>
-      <input type="submit" value="Start Quiz">
+      <input class = "button" type="submit" value="Start Quiz">
     </form>
     <p>${message}</p>
     <br>
