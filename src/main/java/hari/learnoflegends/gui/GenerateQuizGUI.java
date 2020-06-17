@@ -1,6 +1,5 @@
 package hari.learnoflegends.gui;
 
-import hari.learnoflegends.App;
 import hari.learnoflegends.quiz.Quiz;
 import spark.ModelAndView;
 import spark.QueryParamsMap;
@@ -17,7 +16,7 @@ public class GenerateQuizGUI implements TemplateViewRoute {
     String show = vars.value("showAfterQuestion");
     boolean showAfterQuestion = show != null && show.equals("showAfterQuestion");
     Quiz q = new Quiz(Integer.valueOf(vars.value("numQuestions")), showAfterQuestion);
-    App.setQuiz(q);
+    request.session().attribute("quiz", q);
     response.redirect("/question");
     return null;
   }

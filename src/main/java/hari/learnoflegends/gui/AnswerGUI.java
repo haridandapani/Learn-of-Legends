@@ -2,7 +2,6 @@ package hari.learnoflegends.gui;
 
 import java.util.Map;
 
-import hari.learnoflegends.App;
 import hari.learnoflegends.quiz.Question;
 import hari.learnoflegends.quiz.Quiz;
 import spark.ModelAndView;
@@ -16,7 +15,7 @@ public class AnswerGUI implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) throws Exception {
 
-    Quiz q = App.getQuiz();
+    Quiz q = request.session().attribute("quiz");
     Question question = q.getUnanswered();
     if (question == null) {
       question = q.getBefore();

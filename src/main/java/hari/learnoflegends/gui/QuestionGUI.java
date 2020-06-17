@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import hari.learnoflegends.App;
 import hari.learnoflegends.quiz.Question;
 import hari.learnoflegends.quiz.Quiz;
 import spark.ModelAndView;
@@ -16,7 +15,7 @@ public class QuestionGUI implements TemplateViewRoute {
 
   @Override
   public ModelAndView handle(Request request, Response response) throws Exception {
-    Quiz q = App.getQuiz();
+    Quiz q = request.session().attribute("quiz");
     try {
     } catch (NumberFormatException e) {
       response.redirect("/");

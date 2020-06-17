@@ -12,7 +12,6 @@ import hari.learnoflegends.gui.GenerateQuizGUI;
 import hari.learnoflegends.gui.QuestionGUI;
 import hari.learnoflegends.gui.QuizGUI;
 import hari.learnoflegends.league.ChampionManager;
-import hari.learnoflegends.quiz.Quiz;
 import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
@@ -25,7 +24,6 @@ public class App {
   private static final int DEFAULT_PORT = 4567;
   // URL PATHS
   public static final String LANDING_PAGE = "/";
-  public static Quiz currentQuiz;
 
   public static void main(String[] args) {
     manager = WebScraper.getChampions();
@@ -105,15 +103,8 @@ public class App {
     return manager;
   }
 
-  public static Quiz getQuiz() {
-    return currentQuiz;
-  }
-
   public static void setManager(ChampionManager newManager) {
     manager = newManager;
   }
 
-  public static void setQuiz(Quiz newQuiz) {
-    currentQuiz = newQuiz;
-  }
 }

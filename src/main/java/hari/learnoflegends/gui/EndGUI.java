@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import hari.learnoflegends.App;
+import hari.learnoflegends.quiz.Quiz;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -25,8 +25,9 @@ public class EndGUI implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) throws Exception {
     try {
+      Quiz thisQuiz = request.session().attribute("quiz");
       Map<String, Object> variables = ImmutableMap.<String, Object>builder()
-          .put("message", getResult()).put("quiz", App.getQuiz().getAsListMap()).build();
+          .put("message", getResult()).put("quiz", thisQuiz.getAsListMap()).build();
       return new ModelAndView(variables, "query.ftl");
     } catch (NullPointerException e) {
       response.redirect("/");
